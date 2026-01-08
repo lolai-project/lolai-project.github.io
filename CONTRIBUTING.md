@@ -14,7 +14,7 @@ Thank you for your interest in contributing to LOLAI! This document provides gui
 
 1. **Fork the Repository**
    ```bash
-   git clone https://github.com/lolai-project/lolai-project.git
+   git clone https://github.com/lolai-project/lolai-project.github.io.git
    cd lolai
    ```
 
