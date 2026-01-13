@@ -1,0 +1,380 @@
+---
+layout: default
+title: Categories
+---
+
+<div class="container">
+    <div class="categories-page">
+        <h1>Browse by Category</h1>
+        <p class="page-subtitle">Explore AI agents organized by their primary function and use case</p>
+
+        {% assign categories = site.agents | map: 'category' | uniq | sort %}
+        
+        <div class="categories-grid">
+            {% for category in categories %}
+            {% assign category_agents = site.agents | where: 'category', category %}
+            
+            <div class="category-card">
+                <div class="category-header">
+                    <h2>{{ category }}</h2>
+                    <span class="category-count">{{ category_agents.size }} agent{% if category_agents.size != 1 %}s{% endif %}</span>
+                </div>
+                
+                <ul class="category-agents-list">
+                    {% for agent in category_agents limit:5 %}
+                    <li>
+                        <a href="{{ agent.url | relative_url }}">
+                            <span class="agent-name">{{ agent.title }}</span>
+                            <span class="agent-vendor">{{ agent.vendor }}</span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                
+                {% if category_agents.size > 5 %}
+                <div class="category-footer">
+                    <a href="#" class="view-all-link" data-category="{{ category }}">
+                        View all {{ category_agents.size }} agents →
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <section class="category-description">
+            <h2>Category Definitions</h2>
+            
+            <div class="definition-grid">
+                <div class="definition-card">
+                    <h3>🤖 Code Assistants</h3>
+                    <p>AI-powered tools that help developers write, complete, and review code. These integrate with IDEs and have varying levels of system access.</p>
+                    <strong>Examples:</strong> GitHub Copilot, Cursor, Tabnine
+                </div>
+
+                <div class="definition-card">
+                    <h3>🔄 Autonomous Agents</h3>
+                    <p>AI systems that can operate independently to achieve complex goals, often with the ability to plan, execute, and adapt their actions.</p>
+                    <strong>Examples:</strong> AutoGPT, AgentGPT, BabyAGI
+                </div>
+
+                <div class="definition-card">
+                    <h3>🔐 Security Tools</h3>
+                    <p>AI-enhanced security applications for vulnerability scanning, penetration testing, threat detection, or security analysis.</p>
+                    <strong>Examples:</strong> AI-powered scanners, ML-based detection systems
+                </div>
+
+                <div class="definition-card">
+                    <h3>⚙️ System Automation</h3>
+                    <p>RPA and automation tools powered by AI for task automation, workflow management, and system integration.</p>
+                    <strong>Examples:</strong> UiPath with AI, Automation Anywhere
+                </div>
+
+                <div class="definition-card">
+                    <h3>📊 Research Assistants</h3>
+                    <p>AI tools designed to help with research, data analysis, information gathering, and knowledge synthesis.</p>
+                    <strong>Examples:</strong> Research-focused LLM agents, academic assistants
+                </div>
+
+                <div class="definition-card">
+                    <h3>🎨 Creative Tools</h3>
+                    <p>AI-powered applications for content generation, design, media manipulation, and creative workflows.</p>
+                    <strong>Examples:</strong> Image generators with system access, video editing agents
+                </div>
+            </div>
+        </section>
+
+        <section class="risk-matrix">
+            <h2>Risk Assessment Matrix</h2>
+            <p>Understanding the risk level associated with different agent categories:</p>
+            
+            <table class="risk-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>System Access</th>
+                        <th>Autonomy Level</th>
+                        <th>Risk Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Autonomous Agents</td>
+                        <td><span class="badge danger">High</span></td>
+                        <td><span class="badge danger">High</span></td>
+                        <td><span class="badge danger">Critical</span></td>
+                    </tr>
+                    <tr>
+                        <td>Code Assistants</td>
+                        <td><span class="badge warning">Medium</span></td>
+                        <td><span class="badge warning">Medium</span></td>
+                        <td><span class="badge warning">High</span></td>
+                    </tr>
+                    <tr>
+                        <td>Security Tools</td>
+                        <td><span class="badge danger">High</span></td>
+                        <td><span class="badge success">Low</span></td>
+                        <td><span class="badge warning">High</span></td>
+                    </tr>
+                    <tr>
+                        <td>System Automation</td>
+                        <td><span class="badge warning">Medium</span></td>
+                        <td><span class="badge warning">Medium</span></td>
+                        <td><span class="badge warning">Medium</span></td>
+                    </tr>
+                    <tr>
+                        <td>Research Assistants</td>
+                        <td><span class="badge success">Low</span></td>
+                        <td><span class="badge success">Low</span></td>
+                        <td><span class="badge success">Low</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+
+<style>
+.categories-page h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.page-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+    margin-bottom: 3rem;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.category-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+    border-color: var(--primary-color);
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.category-header h2 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.category-count {
+    background: rgba(37, 99, 235, 0.2);
+    color: var(--primary-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.category-agents-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.category-agents-list li {
+    margin-bottom: 0.75rem;
+}
+
+.category-agents-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--dark-bg);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.category-agents-list a:hover {
+    background: var(--border-color);
+    transform: translateX(5px);
+}
+
+.agent-name {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.agent-vendor {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.category-footer {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.view-all-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.view-all-link:hover {
+    text-decoration: underline;
+}
+
+.category-description {
+    margin: 4rem 0;
+}
+
+.category-description h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.definition-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.definition-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.definition-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.definition-card p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.definition-card strong {
+    color: var(--primary-color);
+    font-size: 0.875rem;
+}
+
+.risk-matrix {
+    margin: 4rem 0;
+}
+
+.risk-matrix h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.risk-matrix p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.risk-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.risk-table thead {
+    background: var(--darker-bg);
+}
+
+.risk-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.risk-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.risk-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.risk-table tbody tr:hover {
+    background: var(--dark-bg);
+}
+
+.badge.danger {
+    background: rgba(220, 38, 38, 0.2);
+    color: var(--danger-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.badge.warning {
+    background: rgba(217, 119, 6, 0.2);
+    color: var(--warning-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.badge.success {
+    background: rgba(5, 150, 105, 0.2);
+    color: var(--success-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .definition-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .risk-table {
+        font-size: 0.875rem;
+    }
+    
+    .risk-table th,
+    .risk-table td {
+        padding: 0.75rem 0.5rem;
+    }
+}
+</style>
