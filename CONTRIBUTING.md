@@ -213,9 +213,8 @@ By contributing, you agree that your contributions will be licensed under the MI
 
 ## 📬 Questions?
 
-- Open a [Discussion](https://github.com/yourusername/lolai/discussions)
-- Join our community chat
-- Email: contact@yourdomain.com
+- Open a [Discussion](https://github.com/lolai-project/lolai-project.github.io/discussions)
+- Reach out at [X](https://x.com/s0ld133rr)
 
 ---
 
