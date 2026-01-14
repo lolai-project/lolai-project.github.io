@@ -214,9 +214,9 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 📬 Contact
 
-- Create an [Issue](https://github.com/yourusername/lolai/issues)
-- Submit a [Pull Request](https://github.com/yourusername/lolai/pulls)
-- Twitter: [@yourusername](https://twitter.com/yourusername)
+- Create an [Issue](https://github.com/lolai-project/lolai-project.github.io/issues)
+- Submit a [Pull Request](https://github.com/lolai-project/lolai-project.github.io/pulls)
+- Twitter: [@yourusername](https://x.com/s0ld133rr)
 
 ---
 
