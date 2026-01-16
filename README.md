@@ -25,8 +25,8 @@ LOLAI (Living Off The Land AI) documents AI agents and assistants that can be we
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/lolai.git
-cd lolai
+https://github.com/lolai-project/lolai-project.github.io.git
+cd lolai-project.github.io
 
 # Install dependencies
 bundle install
