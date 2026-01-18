@@ -11,13 +11,19 @@
     // DOM Elements
     const searchInput = document.getElementById('live-search');
     const agentsGrid = document.getElementById('agents-grid');
+    const featuredGrid = document.querySelector('.featured-grid');
     const categoryList = document.getElementById('category-list');
     const noResults = document.getElementById('no-results');
 
-    // Check if we're on the home page
-    if (!searchInput || !agentsGrid) return;
+    // Determine active grid (agents or featured)
+    const activeGrid = agentsGrid || featuredGrid;
 
-    const agentCards = Array.from(agentsGrid.querySelectorAll('.agent-card'));
+    // Exit if no search input or grid available
+    if (!searchInput || !activeGrid) return;
+
+    // Get cards based on active grid
+    const cardSelector = agentsGrid ? '.agent-card' : '.featured-card';
+    const agentCards = Array.from(activeGrid.querySelectorAll(cardSelector));
 
     // Debounce function to limit search frequency
     function debounce(func, wait) {
@@ -42,8 +48,11 @@
             const vendor = card.querySelector('.agent-vendor')?.textContent.toLowerCase() || '';
             const category = card.dataset.category?.toLowerCase() || '';
             const platforms = card.dataset.platforms?.toLowerCase() || '';
-            const capabilities = Array.from(card.querySelectorAll('.agent-capabilities li'))
-                .map(li => li.textContent.toLowerCase())
+
+            // Handle both agent-capabilities and capabilities-preview
+            const capabilitiesSelector = '.agent-capabilities li, .capabilities-preview .capability-tag';
+            const capabilities = Array.from(card.querySelectorAll(capabilitiesSelector))
+                .map(el => el.textContent.toLowerCase())
                 .join(' ');
 
             const searchableText = `${title} ${vendor} ${category} ${platforms} ${capabilities}`;
@@ -65,12 +74,12 @@
 
         // Show/hide no results message
         if (visibleCount === 0) {
-            agentsGrid.style.display = 'none';
+            activeGrid.style.display = 'none';
             if (noResults) {
                 noResults.classList.remove('hidden');
             }
         } else {
-            agentsGrid.style.display = 'grid';
+            activeGrid.style.display = 'grid';
             if (noResults) {
                 noResults.classList.add('hidden');
             }
