@@ -3,21 +3,33 @@ layout: default
 title: About
 ---
 
-<div class="container">
-    <div class="about-page">
+<div class="container agent-page">
+    <a href="{{ '/' | relative_url }}" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Back to Home
+    </a>
+
+    <div class="agent-header">
         <h1>About LOLAI</h1>
-        
-        <section class="about-section">
-            <h2>🎯 Mission</h2>
+        <div class="agent-meta">
+            <span class="badge badge-cat">Documentation</span>
+            <span class="badge vendor">Open Source</span>
+        </div>
+    </div>
+
+    <section class="agent-section">
+        <h2>Mission</h2>
+        <div class="content-wrapper">
             <p>
-                LOLAI (Living Off The Land AI) aims to document and catalog AI agents and assistants that can be weaponized, 
-                abused, or exploited in both enterprise and personal computing environments. As AI agents become more prevalent 
+                LOLAI (Living Off The Land AI) aims to document and catalog AI agents and assistants that can be weaponized,
+                abused, or exploited in both enterprise and personal computing environments. As AI agents become more prevalent
                 and powerful, understanding their security implications is crucial for defenders and security professionals.
             </p>
-        </section>
+        </div>
+    </section>
 
-        <section class="about-section">
-            <h2>🤖 What We Track</h2>
+    <section class="agent-section">
+        <h2>What We Track</h2>
+        <div class="content-wrapper">
             <p>We focus on documenting AI agents with the following characteristics:</p>
             <ul>
                 <li><strong>System Access:</strong> Agents with file system, terminal, or API access</li>
@@ -26,236 +38,93 @@ title: About
                 <li><strong>Network Capabilities:</strong> Tools with network communication abilities</li>
                 <li><strong>Plugin/Extension Systems:</strong> Platforms that support third-party extensions</li>
             </ul>
-        </section>
+        </div>
+    </section>
 
-        <section class="about-section">
-            <h2>📚 Inspiration</h2>
+    <section class="agent-section">
+        <h2>Inspiration</h2>
+        <div class="content-wrapper">
             <p>LOLAI is inspired by successful "Living Off The Land" projects:</p>
             <ul>
                 <li>
-                    <strong><a href="https://gtfobins.github.io/" target="_blank">GTFOBins</a></strong> - 
+                    <strong><a href="https://gtfobins.github.io/" target="_blank" rel="noopener noreferrer">GTFOBins</a></strong> -
                     Unix binaries that can be used to bypass local security restrictions
                 </li>
                 <li>
-                    <strong><a href="https://lolbas-project.github.io/" target="_blank">LOLBAS</a></strong> - 
+                    <strong><a href="https://lolbas-project.github.io/" target="_blank" rel="noopener noreferrer">LOLBAS</a></strong> -
                     Living Off The Land Binaries, Scripts and Libraries for Windows
                 </li>
                 <li>
-                    <strong><a href="https://www.loldrivers.io/" target="_blank">LOLDrivers</a></strong> - 
+                    <strong><a href="https://www.loldrivers.io/" target="_blank" rel="noopener noreferrer">LOLDrivers</a></strong> -
                     Windows drivers used by attackers to bypass security software
                 </li>
                 <li>
-                    <strong><a href="https://lolrmm.io/" target="_blank">LOLRMM</a></strong> - 
+                    <strong><a href="https://lolrmm.io/" target="_blank" rel="noopener noreferrer">LOLRMM</a></strong> -
                     Remote monitoring and management tools used in attacks
                 </li>
             </ul>
-        </section>
+        </div>
+    </section>
 
-        <section class="about-section">
-            <h2>🎓 Use Cases</h2>
-            <p>LOLAI serves multiple audiences:</p>
-            
-            <h3>For Blue Teams & Defenders</h3>
-            <ul>
-                <li>Understand attack vectors and TTPs involving AI agents</li>
-                <li>Implement detection rules and monitoring strategies</li>
-                <li>Develop incident response playbooks</li>
-                <li>Identify artifacts and IOCs for forensic analysis</li>
-            </ul>
-
-            <h3>For Red Teams & Penetration Testers</h3>
-            <ul>
-                <li>Discover legitimate tools for authorized testing</li>
-                <li>Understand capabilities and limitations</li>
-                <li>Plan attack scenarios and simulations</li>
-                <li>Evaluate organizational security posture</li>
-            </ul>
-
-            <h3>For Security Researchers</h3>
-            <ul>
-                <li>Research emerging threats in AI security</li>
-                <li>Contribute findings to the community</li>
-                <li>Map techniques to MITRE ATT&CK framework</li>
-                <li>Develop new detection methodologies</li>
-            </ul>
-
-            <h3>For Organizations</h3>
-            <ul>
-                <li>Assess risks of AI agent deployment</li>
-                <li>Create security policies and guidelines</li>
-                <li>Implement access controls and monitoring</li>
-                <li>Train security teams on AI-specific threats</li>
-            </ul>
-        </section>
-
-        <section class="about-section">
-            <h2>🔬 Methodology</h2>
+    <section class="agent-section">
+        <h2>Methodology</h2>
+        <div class="content-wrapper">
             <p>Each agent entry includes:</p>
             <ul>
-                <li><strong>Technical Details:</strong> Capabilities, platforms, privilege requirements</li>
-                <li><strong>Attack Vectors:</strong> Documented abuse scenarios with examples</li>
-                <li><strong>MITRE ATT&CK Mapping:</strong> Alignment with industry-standard tactics and techniques</li>
-                <li><strong>Artifacts:</strong> Logs, configurations, and forensic indicators</li>
-                <li><strong>Detection Methods:</strong> Network, host, and behavioral detection strategies</li>
-                <li><strong>Prevention:</strong> Mitigation techniques and security controls</li>
-                <li><strong>References:</strong> Links to documentation, research, and CVEs</li>
+                <li><strong>Attack Vectors:</strong> Documented methods of abuse with practical examples</li>
+                <li><strong>Technical Details:</strong> Capabilities, permissions, and system access</li>
+                <li><strong>MITRE ATT&CK Mapping:</strong> Alignment with industry-standard attack frameworks</li>
+                <li><strong>Detection Methods:</strong> Artifacts, logs, and indicators of compromise</li>
+                <li><strong>Prevention Strategies:</strong> Mitigation techniques and best practices</li>
             </ul>
-        </section>
+        </div>
+    </section>
 
-        <section class="about-section">
-            <h2>🤝 Contributing</h2>
-            <p>
-                LOLAI is an open-source, community-driven project. We welcome contributions from security researchers, 
-                developers, and anyone interested in AI security.
-            </p>
-            <p>Ways to contribute:</p>
+    <section class="agent-section">
+        <h2>Use Cases</h2>
+        <div class="content-wrapper">
+            <p>LOLAI serves multiple audiences:</p>
             <ul>
-                <li>Submit new AI agents via Pull Request</li>
-                <li>Update existing entries with new techniques</li>
-                <li>Improve detection methods and IOCs</li>
-                <li>Add MITRE ATT&CK mappings</li>
+                <li><strong>Security Teams:</strong> Understand risks of AI agents in your environment</li>
+                <li><strong>Penetration Testers:</strong> Reference for red team engagements</li>
+                <li><strong>Developers:</strong> Security considerations when building AI-powered tools</li>
+                <li><strong>Researchers:</strong> Catalog of AI security techniques and attack patterns</li>
+                <li><strong>Policy Makers:</strong> Information for AI governance and compliance</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="agent-section">
+        <h2>Contributing</h2>
+        <div class="content-wrapper">
+            <p>LOLAI is an open-source community project. We welcome contributions:</p>
+            <ul>
+                <li>Submit new AI agents with documented attack vectors</li>
+                <li>Improve existing documentation</li>
+                <li>Add detection methods and IOCs</li>
                 <li>Report issues or suggest improvements</li>
-                <li>Share the project with your network</li>
             </ul>
-            <p>
-                <a href="https://github.com/lolai-project/lolai-project.github.io" target="_blank" class="cta-button">Contribute on GitHub →</a>
+            <p style="margin-top: 1rem;">
+                Visit our <a href="https://github.com/lolai-project/lolai-project.github.io" target="_blank" rel="noopener noreferrer">GitHub repository</a>
+                to get started.
             </p>
-        </section>
+        </div>
+    </section>
 
-        <section class="about-section">
-            <h2>⚠️ Responsible Disclosure</h2>
-            <p>
-                We are committed to responsible disclosure practices. This project is intended for <strong>defensive 
-                and educational purposes only</strong>.
+    <section class="agent-section">
+        <h2>Disclaimer</h2>
+        <div class="content-wrapper">
+            <p style="padding: 1rem; background: rgba(248, 81, 73, 0.1); border-left: 3px solid var(--accent-danger); border-radius: 4px;">
+                <strong>⚠️ Important:</strong> This project is for <strong>educational and defensive purposes only</strong>.
+                The techniques documented here should only be used in authorized security testing, research, or defensive contexts.
+                Unauthorized access to computer systems is illegal.
             </p>
-            <ul>
-                <li>We do not publish active 0-day vulnerabilities</li>
-                <li>All information is derived from public sources or authorized research</li>
-                <li>We coordinate with vendors for responsible disclosure when appropriate</li>
-                <li>Techniques should only be used in authorized testing environments</li>
-            </ul>
-        </section>
+        </div>
+    </section>
 
-        <section class="about-section">
-            <h2>📊 Statistics</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <span class="stat-number">{{ site.agents.size }}</span>
-                    <span class="stat-label">AI Agents Documented</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">{{ site.agents | map: 'category' | uniq | size }}</span>
-                    <span class="stat-label">Categories</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">{{ site.agents | map: 'mitre_techniques' | flatten | uniq | size }}</span>
-                    <span class="stat-label">MITRE Techniques</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="about-section">
-            <h2>📞 Contact</h2>
-            <p>Have questions, suggestions, or want to report an issue?</p>
-            <ul>
-                <li><a href="https://github.com/lolai-project/lolai-project.github.io/issues" target="_blank">Open an Issue on GitHub</a></li>
-                <li><a href="https://github.com/lolai-project/lolai-project.github.io/pulls" target="_blank">Submit a Pull Request</a></li>
-                <li><a href="https://x.com/s0ld133rr" target="_blank">Reach out on X</a></li>
-            </ul>
-        </section>
-
-        <section class="about-section">
-            <h2>📜 License</h2>
-            <p>
-                LOLAI is released under the <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>. 
-                You are free to use, modify, and distribute this project with attribution.
-            </p>
-        </section>
+    <div class="agent-footer">
+        <a href="{{ '/' | relative_url }}" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i> Back to Home
+        </a>
     </div>
 </div>
-
-<style>
-.about-page h1 {
-    font-size: 3rem;
-    margin-bottom: 2rem;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.about-section {
-    margin-bottom: 3rem;
-}
-
-.about-section h2 {
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
-    margin-top: 2rem;
-}
-
-.about-section h3 {
-    font-size: 1.25rem;
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-    color: var(--primary-color);
-}
-
-.about-section ul {
-    margin-left: 2rem;
-    margin-top: 0.5rem;
-}
-
-.about-section li {
-    margin-bottom: 0.5rem;
-    line-height: 1.6;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-}
-
-.stat-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 2rem;
-    text-align: center;
-}
-
-.stat-card .stat-number {
-    display: block;
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-}
-
-.stat-card .stat-label {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.cta-button {
-    display: inline-block;
-    padding: 1rem 2rem;
-    background: var(--primary-color);
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    margin-top: 1rem;
-    transition: all 0.2s;
-}
-
-.cta-button:hover {
-    background: #1d4ed8;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow);
-}
-</style>
