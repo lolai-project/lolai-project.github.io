@@ -5,24 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }} | {{ site.title }}</title>
     <meta name="description" content="{{ page.description | default: site.description }}">
+
+    <!-- Fonts: Inter (UI) and JetBrains Mono (Code) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
     {% seo %}
 </head>
 <body>
     <header class="site-header">
-        <div class="container">
-            <nav class="nav">
-                <a href="{{ '/' | relative_url }}" class="logo">
-                    <span class="logo-icon">🤖</span>
-                    <span class="logo-text">LOLAI</span>
+        <div class="container header-inner">
+            <a href="{{ '/' | relative_url }}" class="logo">
+                <i class="fa-solid fa-terminal"></i> LOL<span class="highlight">AI</span>
+            </a>
+
+            <div class="search-wrapper">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input
+                    type="text"
+                    id="live-search"
+                    placeholder="Search agents, functions, capabilities..."
+                    autocomplete="off"
+                >
+                <span class="kbd-shortcut">/</span>
+            </div>
+
+            <nav class="nav-links">
+                <a href="https://github.com/lolai-project/lolai-project.github.io/blob/main/CONTRIBUTING.md" target="_blank">Contribute</a>
+                <a href="https://github.com/lolai-project/lolai-project.github.io" target="_blank" class="github-btn">
+                    <i class="fa-brands fa-github"></i> <span>GitHub</span>
                 </a>
-                <ul class="nav-menu">
-                    <li><a href="{{ '/' | relative_url }}">Home</a></li>
-                    <li><a href="{{ '/agents/' | relative_url }}">Agents</a></li>
-                    <li><a href="{{ '/categories/' | relative_url }}">Categories</a></li>
-                    <li><a href="{{ '/about/' | relative_url }}">About</a></li>
-                    <li><a href="https://github.com/lolai-project/lolai-project.github.io" target="_blank" class="github-link">GitHub</a></li>
-                </ul>
             </nav>
         </div>
     </header>
@@ -33,8 +50,8 @@
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 LOLAI Project. Licensed under MIT.</p>
-            <p>Inspired by <a href="https://gtfobins.github.io/" target="_blank">GTFOBins</a>, <a href="https://lolbas-project.github.io/" target="_blank">LOLBAS</a>, and <a href="https://www.loldrivers.io/" target="_blank">LOLDrivers</a></p>
+            <p>Maintained by <a href="https://github.com/lolai-project" target="_blank">@LOLAI Team</a>. Inspired by <a href="https://gtfobins.github.io/" target="_blank">GTFOBins</a>, <a href="https://lolbas-project.github.io/" target="_blank">LOLBAS</a>, and <a href="https://www.loldrivers.io/" target="_blank">LOLDrivers</a>.</p>
+            <p style="font-size: 0.8rem; opacity: 0.7;">Disclaimer: This project is for educational and defensive purposes only.</p>
         </div>
     </footer>
 

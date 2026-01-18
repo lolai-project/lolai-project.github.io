@@ -3,13 +3,17 @@ layout: default
 ---
 
 <div class="container agent-page">
+    <a href="{{ '/' | relative_url }}" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Back to Agents
+    </a>
+
     <div class="agent-header">
         <h1>{{ page.title }}</h1>
         <div class="agent-meta">
-            <span class="badge category">{{ page.category }}</span>
+            <span class="badge badge-cat">{{ page.category }}</span>
             <span class="badge vendor">{{ page.vendor }}</span>
             {% for platform in page.platforms %}
-            <span class="badge platform">{{ platform }}</span>
+            <span class="tag platform">{{ platform }}</span>
             {% endfor %}
         </div>
     </div>
@@ -55,13 +59,52 @@ layout: default
         <h2>MITRE ATT&CK Techniques</h2>
         <div class="mitre-tags">
             {% for technique in page.mitre_techniques %}
-            <a href="https://attack.mitre.org/techniques/{{ technique }}/" target="_blank" class="mitre-tag">{{ technique }}</a>
+            <a href="https://attack.mitre.org/techniques/{{ technique }}/" target="_blank" class="mitre-tag" rel="noopener noreferrer">
+                {{ technique }}
+            </a>
             {% endfor %}
         </div>
     </section>
     {% endif %}
 
     <div class="agent-footer">
-        <a href="{{ '/agents/' | relative_url }}" class="btn-back">← Back to Agents</a>
+        <a href="{{ '/' | relative_url }}" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i> Back to Agents
+        </a>
     </div>
 </div>
+
+<script>
+// Add copy buttons to code blocks
+document.addEventListener('DOMContentLoaded', function() {
+    const codeBlocks = document.querySelectorAll('.content-wrapper pre');
+
+    codeBlocks.forEach(function(block) {
+        // Create copy button
+        const button = document.createElement('button');
+        button.className = 'copy-btn';
+        button.innerHTML = '<i class="fa-regular fa-copy"></i>';
+        button.title = 'Copy code';
+
+        // Add button to code block
+        block.style.position = 'relative';
+        block.appendChild(button);
+
+        // Copy functionality
+        button.addEventListener('click', function() {
+            const code = block.querySelector('code');
+            const text = code.textContent;
+
+            navigator.clipboard.writeText(text).then(function() {
+                button.innerHTML = '<i class="fa-solid fa-check" style="color: var(--accent-success)"></i>';
+
+                setTimeout(function() {
+                    button.innerHTML = '<i class="fa-regular fa-copy"></i>';
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Failed to copy:', err);
+            });
+        });
+    });
+});
+</script>
