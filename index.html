@@ -3,67 +3,148 @@ layout: default
 title: Home
 ---
 
-<div class="hero">
-    <div class="container">
-        <h1 class="hero-title">Living Off The Land AI</h1>
-        <p class="hero-subtitle">A curated database of AI agents with their attack vectors, abuse techniques, and detection methods</p>
-        
-        <div class="search-container">
-            <input type="text" id="search-input" placeholder="Search agents, techniques, or capabilities..." class="search-input">
-        </div>
-
-        <div class="stats">
-            <div class="stat-item">
-                <span class="stat-number">{{ site.agents.size }}</span>
-                <span class="stat-label">AI Agents</span>
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container hero-inner">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <i class="fa-solid fa-shield-halved"></i>
+                Living Off The Land AI
+            </h1>
+            <p class="hero-subtitle">
+                Comprehensive database documenting AI agents that can be weaponized,
+                abused, or exploited in enterprise and personal computing environments.
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">{{ site.agents.size }}</span>
+                    <span class="stat-label">AI Agents</span>
+                </div>
+                <div class="stat-item">
+                    {% assign categories = site.agents | map: 'category' | uniq %}
+                    <span class="stat-number">{{ categories.size }}</span>
+                    <span class="stat-label">Categories</span>
+                </div>
+                <div class="stat-item">
+                    {% assign techniques = site.agents | map: 'mitre_techniques' | join: ',' | split: ',' | uniq %}
+                    <span class="stat-number">{{ techniques.size }}</span>
+                    <span class="stat-label">MITRE Techniques</span>
+                </div>
             </div>
-            <div class="stat-item">
-                <span class="stat-number">{{ site.agents | map: 'category' | uniq | size }}</span>
-                <span class="stat-label">Categories</span>
+            <div class="hero-cta">
+                <a href="{{ '/agents/' | relative_url }}" class="btn-primary">
+                    <i class="fa-solid fa-database"></i> Browse All Agents
+                </a>
+                <a href="{{ '/about/' | relative_url }}" class="btn-secondary">
+                    <i class="fa-solid fa-circle-info"></i> Learn More
+                </a>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container">
-    <section class="agents-section">
-        <h2>Latest Agents</h2>
-        
-        <div id="agents-grid" class="agents-grid">
-            {% for agent in site.agents %}
-            <div class="agent-card" data-category="{{ agent.category }}" data-platforms="{{ agent.platforms | join: ' ' }}">
-                <h3><a href="{{ agent.url | relative_url }}">{{ agent.title }}</a></h3>
+<!-- Featured Section -->
+<div class="featured-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>
+                <i class="fa-solid fa-star"></i> Featured AI Agents
+            </h2>
+            <p>Popular and widely-used AI agents with documented abuse techniques</p>
+        </div>
+
+        <div class="featured-grid">
+            {% for agent in site.agents limit:6 %}
+            <article class="featured-card">
+                <div class="card-header">
+                    <h3><a href="{{ agent.url | relative_url }}">{{ agent.title }}</a></h3>
+                    <span class="badge badge-cat">{{ agent.category }}</span>
+                </div>
+
                 <p class="agent-vendor">{{ agent.vendor }}</p>
-                <div class="agent-tags">
-                    <span class="tag category">{{ agent.category }}</span>
-                    {% for platform in agent.platforms limit:2 %}
-                    <span class="tag platform">{{ platform }}</span>
+
+                {% if agent.capabilities %}
+                <div class="capabilities-preview">
+                    {% for capability in agent.capabilities limit:2 %}
+                    <span class="capability-tag">
+                        <i class="fa-solid fa-check"></i> {{ capability }}
+                    </span>
                     {% endfor %}
                 </div>
-                {% if agent.capabilities %}
-                <div class="agent-capabilities">
-                    <strong>Key Capabilities:</strong>
-                    <ul>
-                        {% for capability in agent.capabilities limit:3 %}
-                        <li>{{ capability }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
                 {% endif %}
-                <a href="{{ agent.url | relative_url }}" class="card-link">View Details →</a>
-            </div>
+
+                <div class="card-footer">
+                    <a href="{{ agent.url | relative_url }}" class="card-link">
+                        View Details <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </article>
             {% endfor %}
         </div>
-    </section>
 
-    <section class="about-section">
-        <h2>About LOLAI</h2>
-        <p>LOLAI documents AI agents that can be abused for malicious purposes in enterprise and personal environments. Similar to GTFOBins and LOLBAS projects, we provide detailed information about:</p>
-        <ul>
-            <li><strong>Attack Vectors:</strong> How these agents can be weaponized</li>
-            <li><strong>Capabilities:</strong> What system access and permissions they have</li>
-            <li><strong>Detection:</strong> Artifacts, logs, and IOCs for blue teams</li>
-            <li><strong>MITRE ATT&CK Mapping:</strong> Aligned with industry frameworks</li>
-        </ul>
-    </section>
+        <div class="view-all-cta">
+            <a href="{{ '/agents/' | relative_url }}" class="btn-outline">
+                View All {{ site.agents.size }} Agents
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- About Section Enhanced -->
+<div class="about-wrapper">
+    <div class="container">
+        <section class="about-section-enhanced">
+            <div class="about-header">
+                <h2>
+                    <i class="fa-solid fa-circle-info"></i> About LOLAI
+                </h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        LOLAI documents AI agents that can be abused for malicious purposes
+                        in enterprise and personal environments. Similar to GTFOBins and LOLBAS
+                        projects, we provide detailed information about attack vectors,
+                        capabilities, and detection methods.
+                    </p>
+                </div>
+                <div class="about-features">
+                    <div class="feature-item">
+                        <i class="fa-solid fa-crosshairs feature-icon"></i>
+                        <div>
+                            <strong>Attack Vectors</strong>
+                            <p>How these agents can be weaponized</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-microchip feature-icon"></i>
+                        <div>
+                            <strong>Capabilities</strong>
+                            <p>System access and permissions</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-magnifying-glass feature-icon"></i>
+                        <div>
+                            <strong>Detection</strong>
+                            <p>Artifacts, logs, and IOCs</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-diagram-project feature-icon"></i>
+                        <div>
+                            <strong>MITRE ATT&CK</strong>
+                            <p>Industry framework alignment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-cta">
+                <a href="{{ '/about/' | relative_url }}" class="btn-text">
+                    Read Full Documentation <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </section>
+    </div>
 </div>

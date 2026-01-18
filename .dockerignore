@@ -1,0 +1,30 @@
+# Jekyll build artifacts
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# IDE
+.vscode/
+.idea/
+
+# Claude files
+.claude/
+
+# Reference files
+new_ui/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

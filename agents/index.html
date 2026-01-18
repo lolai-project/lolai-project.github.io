@@ -3,100 +3,109 @@ layout: default
 title: All Agents
 ---
 
-<div class="container">
-    <div class="agents-list-page">
-        <h1>All AI Agents</h1>
-        <p class="page-subtitle">Comprehensive database of AI agents with documented attack vectors and abuse techniques</p>
-
-        <div class="filters-section">
-            <div class="search-box">
-                <input type="text" id="agent-search" placeholder="Search by name, vendor, or capability..." class="filter-search">
-            </div>
-            
-            <div class="filter-groups">
-                <div class="filter-group">
-                    <label>Category:</label>
-                    <select id="category-filter" class="filter-select">
-                        <option value="all">All Categories</option>
-                        {% assign categories = site.agents | map: 'category' | uniq | sort %}
-                        {% for category in categories %}
-                        <option value="{{ category }}">{{ category }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label>Platform:</label>
-                    <select id="platform-filter" class="filter-select">
-                        <option value="all">All Platforms</option>
-                        <option value="Windows">Windows</option>
-                        <option value="macOS">macOS</option>
-                        <option value="Linux">Linux</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label>Privilege Level:</label>
-                    <select id="privilege-filter" class="filter-select">
-                        <option value="all">All Levels</option>
-                        <option value="User">User</option>
-                        <option value="Administrator">Administrator</option>
-                        <option value="Root">Root</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="view-toggle">
-                <button class="view-btn active" data-view="grid">
-                    <span>⊞</span> Grid
-                </button>
-                <button class="view-btn" data-view="list">
-                    <span>☰</span> List
-                </button>
-            </div>
+<div class="container layout-grid">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <h3><i class="fa-solid fa-layer-group"></i> Categories</h3>
+            <ul class="filter-list" id="category-list">
+                <li>
+                    <button class="filter-btn active" data-category="All">
+                        <span>All Agents</span>
+                        <span class="count">{{ site.agents.size }}</span>
+                    </button>
+                </li>
+                {% assign categories = site.agents | map: 'category' | uniq | sort %}
+                {% for category in categories %}
+                <li>
+                    <button class="filter-btn" data-category="{{ category }}">
+                        <span>{{ category }}</span>
+                        <span class="count">{{ site.agents | where: 'category', category | size }}</span>
+                    </button>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
 
-        <div class="results-info">
-            <span id="results-count">{{ site.agents.size }}</span> agents found
+        <div class="sidebar-section">
+            <h3><i class="fa-solid fa-microchip"></i> Platforms</h3>
+            <ul class="filter-list" id="platform-list">
+                <li>
+                    <button class="filter-btn active" data-platform="All">
+                        <span>All Platforms</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="filter-btn" data-platform="Windows">
+                        <span>Windows</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="filter-btn" data-platform="macOS">
+                        <span>macOS</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="filter-btn" data-platform="Linux">
+                        <span>Linux</span>
+                    </button>
+                </li>
+            </ul>
         </div>
 
-        <div id="agents-container" class="agents-view-grid">
+        <div class="sidebar-section">
+            <h3><i class="fa-solid fa-bolt"></i> Key Capabilities</h3>
+            <div class="capability-filters" id="capability-filters">
+                <button class="capability-badge active" data-capability="all">
+                    All Capabilities
+                </button>
+
+                {% assign all_capabilities = "" | split: "" %}
+                {% for agent in site.agents %}
+                    {% for capability in agent.capabilities %}
+                        {% assign all_capabilities = all_capabilities | push: capability %}
+                    {% endfor %}
+                {% endfor %}
+
+                {% assign unique_capabilities = all_capabilities | uniq | sort %}
+
+                {% for capability in unique_capabilities limit:15 %}
+                <button class="capability-badge" data-capability="{{ capability | downcase }}">
+                    {{ capability }}
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content-area">
+        <div style="margin-bottom: 30px;">
+            <h1 style="font-size: 2rem; font-family: var(--font-code); margin-bottom: 10px; color: #fff;">All AI Agents</h1>
+            <p style="color: var(--text-secondary); font-size: 1rem;">Comprehensive database of AI agents with documented attack vectors and abuse techniques</p>
+        </div>
+
+        <div id="agents-grid" class="agents-grid">
             {% for agent in site.agents %}
-            <div class="agent-item" 
-                 data-category="{{ agent.category }}" 
-                 data-platforms="{{ agent.platforms | join: ',' }}"
-                 data-privilege="{{ agent.privilege_level | default: 'User' }}"
-                 data-vendor="{{ agent.vendor | downcase }}"
-                 data-title="{{ agent.title | downcase }}">
-                <div class="agent-item-header">
+            <article class="agent-card"
+                     data-category="{{ agent.category }}"
+                     data-platforms="{{ agent.platforms | join: ' ' }}"
+                     data-capabilities="{{ agent.capabilities | join: '|' | downcase }}">
+                <div class="card-header">
                     <h3><a href="{{ agent.url | relative_url }}">{{ agent.title }}</a></h3>
-                    <span class="agent-category-badge">{{ agent.category }}</span>
                 </div>
-                
-                <div class="agent-item-vendor">{{ agent.vendor }}</div>
-                
-                <div class="agent-item-meta">
-                    <div class="meta-group">
-                        <span class="meta-label">Platforms:</span>
-                        <div class="meta-values">
-                            {% for platform in agent.platforms %}
-                            <span class="platform-tag">{{ platform }}</span>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    
-                    {% if agent.privilege_level %}
-                    <div class="meta-group">
-                        <span class="meta-label">Privilege:</span>
-                        <span class="privilege-badge privilege-{{ agent.privilege_level | downcase }}">
-                            {{ agent.privilege_level }}
-                        </span>
-                    </div>
-                    {% endif %}
+
+                <p class="agent-vendor">{{ agent.vendor }}</p>
+
+                <div class="agent-tags">
+                    <span class="badge badge-cat">{{ agent.category }}</span>
+                    {% for platform in agent.platforms limit:2 %}
+                    <span class="tag platform">{{ platform }}</span>
+                    {% endfor %}
                 </div>
 
                 {% if agent.capabilities %}
-                <div class="agent-item-capabilities">
+                <div class="agent-capabilities">
                     <strong>Key Capabilities:</strong>
                     <ul>
                         {% for capability in agent.capabilities limit:3 %}
@@ -106,382 +115,170 @@ title: All Agents
                 </div>
                 {% endif %}
 
-                {% if agent.mitre_techniques %}
-                <div class="agent-item-mitre">
-                    <strong>MITRE ATT&CK:</strong>
-                    {% for technique in agent.mitre_techniques limit:3 %}
-                    <a href="https://attack.mitre.org/techniques/{{ technique }}/" 
-                       target="_blank" 
-                       class="mitre-badge">{{ technique }}</a>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-                <a href="{{ agent.url | relative_url }}" class="agent-item-link">View Details →</a>
-            </div>
+                <a href="{{ agent.url | relative_url }}" class="card-link">View Details →</a>
+            </article>
             {% endfor %}
         </div>
 
-        <div id="no-results" class="no-results" style="display: none;">
+        <!-- No Results State -->
+        <div id="no-results" class="no-results hidden">
+            <i class="fa-solid fa-robot fa-3x"></i>
             <h3>No agents found</h3>
-            <p>Try adjusting your filters or search terms</p>
+            <p>Try refining your search query or changing the filters.</p>
         </div>
-    </div>
+    </main>
 </div>
 
 <script>
+// Enhanced filtering for agents page
 (function() {
-    const searchInput = document.getElementById('agent-search');
-    const categoryFilter = document.getElementById('category-filter');
-    const platformFilter = document.getElementById('platform-filter');
-    const privilegeFilter = document.getElementById('privilege-filter');
-    const agentItems = document.querySelectorAll('.agent-item');
-    const resultsCount = document.getElementById('results-count');
-    const noResults = document.getElementById('no-results');
-    const agentsContainer = document.getElementById('agents-container');
-    const viewBtns = document.querySelectorAll('.view-btn');
+    'use strict';
 
-    function filterAgents() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const selectedCategory = categoryFilter.value;
-        const selectedPlatform = platformFilter.value;
-        const selectedPrivilege = privilegeFilter.value;
-        
+    const state = {
+        searchTerm: '',
+        activeCategory: 'All',
+        activePlatform: 'All',
+        activeCapabilities: []
+    };
+
+    const searchInput = document.getElementById('live-search');
+    const agentsGrid = document.getElementById('agents-grid');
+    const categoryList = document.getElementById('category-list');
+    const platformList = document.getElementById('platform-list');
+    const noResults = document.getElementById('no-results');
+
+    if (!agentsGrid) return;
+
+    const agentCards = Array.from(agentsGrid.querySelectorAll('.agent-card'));
+
+    function performFilter() {
+        const searchTerm = state.searchTerm.toLowerCase().trim();
         let visibleCount = 0;
 
-        agentItems.forEach(item => {
-            const title = item.dataset.title;
-            const vendor = item.dataset.vendor;
-            const category = item.dataset.category;
-            const platforms = item.dataset.platforms.split(',');
-            const privilege = item.dataset.privilege;
+        agentCards.forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            const vendor = card.querySelector('.agent-vendor')?.textContent.toLowerCase() || '';
+            const category = card.dataset.category?.toLowerCase() || '';
+            const platforms = card.dataset.platforms?.toLowerCase() || '';
 
-            const matchesSearch = !searchTerm || 
-                                title.includes(searchTerm) || 
-                                vendor.includes(searchTerm);
-            const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
-            const matchesPlatform = selectedPlatform === 'all' || platforms.includes(selectedPlatform);
-            const matchesPrivilege = selectedPrivilege === 'all' || privilege === selectedPrivilege;
+            // Парсинг capabilities из data-атрибута
+            const capabilitiesAttr = card.dataset.capabilities || '';
+            const capabilities = capabilitiesAttr.split('|').filter(c => c.trim());
+            const capabilitiesText = capabilities.join(' ');
 
-            if (matchesSearch && matchesCategory && matchesPlatform && matchesPrivilege) {
-                item.style.display = '';
+            const searchableText = `${title} ${vendor} ${category} ${platforms} ${capabilitiesText}`;
+
+            // Search match
+            const matchesSearch = searchTerm === '' || searchableText.includes(searchTerm);
+
+            // Category match (single-select)
+            const matchesCategory = state.activeCategory === 'All' || card.dataset.category === state.activeCategory;
+
+            // Platform match (single-select)
+            const matchesPlatform = state.activePlatform === 'All' || platforms.includes(state.activePlatform.toLowerCase());
+
+            // Capability match (multi-select с OR логикой)
+            let matchesCapability = true;
+            if (state.activeCapabilities.length > 0) {
+                // Агент должен иметь ХОТЯ БЫ ОДНУ выбранную capability
+                matchesCapability = state.activeCapabilities.some(selectedCap =>
+                    capabilities.includes(selectedCap)
+                );
+            }
+
+            // Комбинируем все фильтры с AND логикой
+            if (matchesSearch && matchesCategory && matchesPlatform && matchesCapability) {
+                card.style.display = 'block';
                 visibleCount++;
             } else {
-                item.style.display = 'none';
+                card.style.display = 'none';
             }
         });
 
-        resultsCount.textContent = visibleCount;
-        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        // Показать/скрыть сообщение "No results"
+        if (visibleCount === 0) {
+            agentsGrid.style.display = 'none';
+            if (noResults) noResults.classList.remove('hidden');
+        } else {
+            agentsGrid.style.display = 'grid';
+            if (noResults) noResults.classList.add('hidden');
+        }
     }
 
-    searchInput.addEventListener('input', filterAgents);
-    categoryFilter.addEventListener('change', filterAgents);
-    platformFilter.addEventListener('change', filterAgents);
-    privilegeFilter.addEventListener('change', filterAgents);
-
-    // View toggle
-    viewBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const view = btn.dataset.view;
-            viewBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            agentsContainer.className = `agents-view-${view}`;
+    // Category filters
+    if (categoryList) {
+        categoryList.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                state.activeCategory = btn.dataset.category;
+                categoryList.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                performFilter();
+            });
         });
-    });
+    }
+
+    // Platform filters
+    if (platformList) {
+        platformList.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                state.activePlatform = btn.dataset.platform;
+                platformList.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                performFilter();
+            });
+        });
+    }
+
+    // Capability filters (multi-select)
+    const capabilityFilters = document.getElementById('capability-filters');
+    if (capabilityFilters) {
+        capabilityFilters.querySelectorAll('.capability-badge').forEach(badge => {
+            badge.addEventListener('click', () => {
+                const capability = badge.dataset.capability;
+
+                if (capability === 'all') {
+                    // Клик по "All Capabilities" - очистить все выборы
+                    state.activeCapabilities = [];
+                    capabilityFilters.querySelectorAll('.capability-badge').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    badge.classList.add('active');
+                } else {
+                    // Клик по конкретной capability - toggle выбор
+                    const index = state.activeCapabilities.indexOf(capability);
+
+                    if (index > -1) {
+                        // Снять выбор с этой capability
+                        state.activeCapabilities.splice(index, 1);
+                        badge.classList.remove('active');
+
+                        // Если ничего не выбрано, активировать "All"
+                        if (state.activeCapabilities.length === 0) {
+                            const allBadge = capabilityFilters.querySelector('[data-capability="all"]');
+                            if (allBadge) allBadge.classList.add('active');
+                        }
+                    } else {
+                        // Выбрать эту capability
+                        state.activeCapabilities.push(capability);
+                        badge.classList.add('active');
+
+                        // Деактивировать кнопку "All"
+                        const allBadge = capabilityFilters.querySelector('[data-capability="all"]');
+                        if (allBadge) allBadge.classList.remove('active');
+                    }
+                }
+
+                performFilter();
+            });
+        });
+    }
+
+    // Search integration
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            state.searchTerm = this.value;
+            performFilter();
+        });
+    }
 })();
 </script>
-
-<style>
-.agents-list-page h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.page-subtitle {
-    color: var(--text-secondary);
-    font-size: 1.125rem;
-    margin-bottom: 2rem;
-}
-
-.filters-section {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-}
-
-.search-box {
-    margin-bottom: 1.5rem;
-}
-
-.filter-search {
-    width: 100%;
-    padding: 1rem;
-    background: var(--dark-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    color: var(--text-primary);
-    font-size: 1rem;
-}
-
-.filter-groups {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.filter-group label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-}
-
-.filter-select {
-    padding: 0.75rem;
-    background: var(--dark-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    color: var(--text-primary);
-    font-size: 0.875rem;
-}
-
-.view-toggle {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.view-btn {
-    padding: 0.75rem 1.5rem;
-    background: var(--dark-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.view-btn:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-}
-
-.view-btn.active {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    color: white;
-}
-
-.results-info {
-    margin-bottom: 1.5rem;
-    color: var(--text-secondary);
-}
-
-.agents-view-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 1.5rem;
-}
-
-.agents-view-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.agents-view-list .agent-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 1.5rem;
-}
-
-.agent-item {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1.5rem;
-    transition: all 0.3s;
-}
-
-.agent-item:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow);
-    border-color: var(--primary-color);
-}
-
-.agent-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    margin-bottom: 0.75rem;
-}
-
-.agent-item-header h3 {
-    margin: 0;
-    font-size: 1.25rem;
-}
-
-.agent-item-header a {
-    color: var(--text-primary);
-    text-decoration: none;
-}
-
-.agent-item-header a:hover {
-    color: var(--primary-color);
-}
-
-.agent-category-badge {
-    padding: 0.25rem 0.75rem;
-    background: rgba(37, 99, 235, 0.2);
-    color: var(--primary-color);
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.agent-item-vendor {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    margin-bottom: 1rem;
-}
-
-.agent-item-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    background: var(--dark-bg);
-    border-radius: 6px;
-}
-
-.meta-group {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.meta-label {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    font-weight: 600;
-}
-
-.meta-values {
-    display: flex;
-    gap: 0.25rem;
-    flex-wrap: wrap;
-}
-
-.platform-tag {
-    padding: 0.125rem 0.5rem;
-    background: rgba(124, 58, 237, 0.2);
-    color: var(--secondary-color);
-    border-radius: 4px;
-    font-size: 0.75rem;
-}
-
-.privilege-badge {
-    padding: 0.25rem 0.75rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.privilege-user {
-    background: rgba(5, 150, 105, 0.2);
-    color: var(--success-color);
-}
-
-.privilege-administrator {
-    background: rgba(217, 119, 6, 0.2);
-    color: var(--warning-color);
-}
-
-.privilege-root {
-    background: rgba(220, 38, 38, 0.2);
-    color: var(--danger-color);
-}
-
-.agent-item-capabilities {
-    margin-bottom: 1rem;
-    font-size: 0.875rem;
-}
-
-.agent-item-capabilities ul {
-    margin: 0.5rem 0 0 1.5rem;
-    color: var(--text-secondary);
-}
-
-.agent-item-capabilities li {
-    margin-bottom: 0.25rem;
-}
-
-.agent-item-mitre {
-    margin-bottom: 1rem;
-    font-size: 0.875rem;
-}
-
-.mitre-badge {
-    display: inline-block;
-    margin: 0.25rem 0.25rem 0 0;
-    padding: 0.25rem 0.5rem;
-    background: rgba(220, 38, 38, 0.2);
-    color: var(--danger-color);
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.mitre-badge:hover {
-    background: rgba(220, 38, 38, 0.3);
-}
-
-.agent-item-link {
-    display: inline-block;
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 600;
-    margin-top: 0.5rem;
-}
-
-.agent-item-link:hover {
-    text-decoration: underline;
-}
-
-.no-results {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: var(--text-secondary);
-}
-
-.no-results h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-@media (max-width: 768px) {
-    .filter-groups {
-        grid-template-columns: 1fr;
-    }
-    
-    .agents-view-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
