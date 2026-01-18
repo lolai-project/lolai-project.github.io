@@ -115,7 +115,8 @@ a:hover {
     color: var(--text-secondary);
 }
 
-#live-search, #search-input {
+#live-search,
+#search-input {
     width: 100%;
     background: var(--bg-body);
     border: 1px solid var(--border-color);
@@ -127,7 +128,8 @@ a:hover {
     transition: all 0.2s ease;
 }
 
-#live-search:focus, #search-input:focus {
+#live-search:focus,
+#search-input:focus {
     outline: none;
     border-color: var(--accent-primary);
     box-shadow: 0 0 0 3px var(--accent-glow);
@@ -258,13 +260,15 @@ a:hover {
 }
 
 /* Agents Grid */
-.tool-grid, .agents-grid {
+.tool-grid,
+.agents-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 20px;
 }
 
-.lol-card, .agent-card {
+.lol-card,
+.agent-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius);
@@ -275,7 +279,8 @@ a:hover {
     cursor: pointer;
 }
 
-.lol-card:hover, .agent-card:hover {
+.lol-card:hover,
+.agent-card:hover {
     transform: translateY(-2px);
     border-color: var(--text-secondary);
 }
@@ -287,26 +292,33 @@ a:hover {
     margin-bottom: 12px;
 }
 
-.lol-card h2, .lol-card h3,
-.agent-card h2, .agent-card h3 {
+.lol-card h2,
+.lol-card h3,
+.agent-card h2,
+.agent-card h3 {
     font-size: 1.25rem;
     color: #fff;
     font-family: var(--font-code);
     font-weight: 600;
 }
 
-.lol-card h2 a, .lol-card h3 a,
-.agent-card h2 a, .agent-card h3 a {
+.lol-card h2 a,
+.lol-card h3 a,
+.agent-card h2 a,
+.agent-card h3 a {
     color: #fff;
 }
 
-.lol-card h2 a:hover, .lol-card h3 a:hover,
-.agent-card h2 a:hover, .agent-card h3 a:hover {
+.lol-card h2 a:hover,
+.lol-card h3 a:hover,
+.agent-card h2 a:hover,
+.agent-card h3 a:hover {
     color: var(--accent-primary);
     text-decoration: none;
 }
 
-.lol-desc, .agent-vendor {
+.lol-desc,
+.agent-vendor {
     font-size: 0.95rem;
     color: var(--text-secondary);
     margin-bottom: 20px;
@@ -314,14 +326,16 @@ a:hover {
 }
 
 /* Badges */
-.badges, .agent-tags {
+.badges,
+.agent-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 20px;
 }
 
-.badge, .tag {
+.badge,
+.tag {
     font-family: var(--font-code);
     font-size: 0.75rem;
     padding: 4px 8px;
@@ -331,7 +345,8 @@ a:hover {
     letter-spacing: 0.5px;
 }
 
-.badge-cat, .tag.category {
+.badge-cat,
+.tag.category {
     background: rgba(56, 139, 253, 0.15);
     color: #58a6ff;
     border: 1px solid rgba(56, 139, 253, 0.3);
@@ -341,6 +356,60 @@ a:hover {
     background: rgba(218, 54, 51, 0.15);
     color: #f85149;
     border: 1px solid rgba(218, 54, 51, 0.3);
+}
+
+/* Capability filter buttons */
+.capability-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.capability-badge {
+    font-family: var(--font-code);
+    font-size: 0.7rem;
+    padding: 6px 10px;
+    background: rgba(218, 54, 51, 0.15);
+    color: #f85149;
+    border: 1px solid rgba(218, 54, 51, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.capability-badge:hover {
+    background: rgba(218, 54, 51, 0.25);
+    border-color: rgba(218, 54, 51, 0.5);
+    transform: translateY(-1px);
+}
+
+.capability-badge.active {
+    background: rgba(218, 54, 51, 0.3);
+    color: #ff6b6b;
+    border-color: #f85149;
+    box-shadow: 0 0 8px rgba(218, 54, 51, 0.4);
+}
+
+.capability-badge[data-capability="all"] {
+    background: rgba(88, 166, 255, 0.15);
+    color: #58a6ff;
+    border: 1px solid rgba(88, 166, 255, 0.3);
+    font-weight: 600;
+}
+
+.capability-badge[data-capability="all"]:hover {
+    background: rgba(88, 166, 255, 0.25);
+    border-color: rgba(88, 166, 255, 0.5);
+}
+
+.capability-badge[data-capability="all"].active {
+    background: rgba(88, 166, 255, 0.3);
+    color: #79c0ff;
+    border-color: #58a6ff;
+    box-shadow: 0 0 8px rgba(88, 166, 255, 0.4);
 }
 
 .tag.platform {
@@ -383,9 +452,12 @@ a:hover {
 .back-btn {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
     color: var(--text-secondary);
-    margin-bottom: 25px;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
     cursor: pointer;
     font-family: var(--font-code);
     font-size: 0.85rem;
@@ -403,6 +475,7 @@ a:hover {
 }
 
 .agent-header {
+    padding-top: 2rem;
     margin-bottom: 40px;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 30px;
@@ -514,7 +587,8 @@ a:hover {
     line-height: 1.8;
 }
 
-.content-wrapper ul, .content-wrapper ol {
+.content-wrapper ul,
+.content-wrapper ol {
     margin-left: 2rem;
     margin-bottom: 1rem;
 }
@@ -528,7 +602,8 @@ a:hover {
 }
 
 /* Code Blocks */
-.cmd-block, .content-wrapper pre {
+.cmd-block,
+.content-wrapper pre {
     background: var(--bg-body);
     border: 1px solid var(--border-color);
     border-radius: var(--radius);
@@ -540,7 +615,8 @@ a:hover {
     margin-bottom: 15px;
 }
 
-.cmd-block code, .content-wrapper pre code {
+.cmd-block code,
+.content-wrapper pre code {
     color: var(--accent-success);
     display: block;
     overflow-x: auto;
@@ -608,8 +684,8 @@ a:hover {
 
 /* Agent Footer */
 .agent-footer {
-    margin-top: 3rem;
-    padding-top: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     border-top: 1px solid var(--border-color);
 }
 
@@ -680,7 +756,8 @@ a:hover {
 }
 
 /* No Results State */
-.no-results, #no-results {
+.no-results,
+#no-results {
     text-align: center;
     padding: 60px;
     color: var(--text-secondary);
@@ -1133,7 +1210,8 @@ a:hover {
         font-size: 2rem;
     }
 
-    .tool-grid, .agents-grid {
+    .tool-grid,
+    .agents-grid {
         grid-template-columns: 1fr;
     }
 
