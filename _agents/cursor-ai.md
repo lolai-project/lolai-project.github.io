@@ -107,6 +107,57 @@ npm install react-native-async-storage
 # Instead of legitimate:
 npm install @react-native-async-storage/async-storage
 ```
+### 6. Terminal Command Injection
+**MITRE ATT&CK:** T1059.004 – Unix Shell
+
+Cursor can suggest and execute terminal commands. Malicious or manipulated prompts may result in destructive or unauthorized command execution.
+
+**Example Scenario**
+User requests:  
+“Fix the build errors”
+
+AI suggests:
+```bash
+rm -rf / --no-preserve-root
+
+```
+### 7. Autonomous Multi-File Code Manipulation
+**MITRE ATT&CK:** T1106 – Native API
+
+Cursor’s Composer mode allows the AI to autonomously modify multiple files across a repository. This can reduce developer oversight and enable insecure or malicious logic to persist unnoticed.
+
+**Abuse Scenarios**
+- Authentication or authorization checks removed during refactoring
+- Backdoor logic introduced across multiple modules
+- Debug or insecure configurations left enabled
+
+**Example Scenario**  
+A developer asks the AI:
+> “Refactor the authentication layer to simplify the codebase.”
+
+The AI autonomously modifies multiple files, including:
+- Removing role-based access checks in `auth.js`
+- Broadening conditional logic in middleware to allow all authenticated users
+- Leaving debug flags enabled across configuration files
+
+These changes may not appear malicious individually, but together they weaken authorization controls across the application.
+
+---
+
+### 8. Dependency Confusion via AI Recommendations
+**MITRE ATT&CK:** T1195 – Supply Chain Compromise
+
+Cursor AI may recommend adding dependencies when resolving errors or
+implementing features. Attackers can exploit this behavior by publishing
+malicious packages with names similar to legitimate libraries.
+
+**Example**  
+AI suggests:
+```bash
+npm install react-native-async-storage
+
+
+```
 
 ## Artifacts
 
